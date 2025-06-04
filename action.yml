@@ -1,0 +1,37 @@
+name: Step CI Action
+author: Step CI
+description: Run Step CI workflows
+branding:
+  icon: check-circle
+  color: white
+inputs:
+  workflow:
+    description: 'Workflow Path'
+    required: true
+    default: '.stepci/workflows/workflow.yml'
+  envs:
+    description: 'env option. e.g. "env1 env2 ..."'
+    required: false
+  secrets:
+    description: 'secret option. e.g. "secret1 secret2 ..."'
+    required: false
+  verbose:
+    description: 'verbose option. e.g "true"'
+    required: false
+  loadtest:
+    description: 'load-test option. e.g "true"'
+    required: false
+  concurrency:
+    description: 'concurrency option. e.g. "0"'
+    required: false
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile.action'
+  env:
+    ENV: ${{ inputs.envs }}
+    SECRETS: ${{ inputs.secrets }}
+    VERBOSE: ${{ inputs.verbose }}
+    LOADTEST: ${{ inputs.loadtest }}
+  args:
+    - ${{ inputs.workflow }}
